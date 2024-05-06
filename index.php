@@ -39,8 +39,19 @@ $hotels = [
 
 ];
 
+//mi richiamo il valore selezionato del parcheggio dal FORM
+$parking_available = $_GET['parking_available'];
+
+var_dump($parking_available);
+
+
+//mi richiamo il valore selezionato del voto dal FORM
+$vote_rating = intval($_GET['vote_rating']); //la funzione intval() converte il valore in numero
+
+var_dump($vote_rating);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -119,10 +130,39 @@ $hotels = [
         ?> -->
 
 
-
+        
 
         <!-- Aggiungo tutto in una table -->
         <div class="p-4">
+            
+            <!-- BONUS 1 + 2: Applico il form -->
+            <form action="">
+                <div>
+                    <label for="parking_available">Disponibilità Parcheggio:</label>
+                    <select name="parking_available" id="">
+                        <option value="0" selected>Seleziona Parcheggio</option>
+                        <option value="1">Parcheggio Disponibile</option>
+                        <option value="2">Parcheggio Non Disponibile</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="vote_rating">Punteggio Hotel:</label>
+                    <select name="vote_rating" id="">
+                        <option value="0" selected>Seleziona Voto</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-dark">Invio</button>
+            </form>
+
+            <br>
+
             <table class="table border">
                 <thead class="text-center">
                     <tr>
@@ -147,12 +187,15 @@ $hotels = [
                     $distance_hotel = $hotel['distance_to_center'];
                 ?>
                     <tbody class="text-center">
-                        <tr>
+                        <!-- sfrutto il ternario per indicare le condizioni di disponibilità parcheggio & il voto dell'hotel-->
+                        <tr class="
+                            <?= $parking_hotel === true && $parking_available === '2' || $vote_rating !== $vote_hotel || $parking_hotel === false && $parking_available === '1' || $vote_rating !== $vote_hotel ? 'd-none' : ''; ?>
+                            ">
                             <td scope="row"><?= $name_hotel; ?></td>
-                            <td scope="row"><?= $description_hotel; ?></td>
+                            <td><?= $description_hotel; ?></td>
 
                             <!-- creo una condizione per cui stampare in tabella se il parcheggio è disponibile o meno -->
-                            <td scope="row">
+                            <td>
                                 <?php 
                                     if($parking_hotel === true){
                                       echo '<span style="color: rgb(20, 176, 20);"> &#10003; </span>';
@@ -161,13 +204,14 @@ $hotels = [
                                     }
                                 ?>
                             </td>
-                            <td scope="row"><?= $vote_hotel; ?>/5</td>
-                            <td scope="row"><?= $distance_hotel; ?></td>
+                            <td><?= $vote_hotel; ?>/5</td>
+                            <td><?= $distance_hotel; ?></td>
                         </tr>
                     </tbody>
                 <?php } ?>
             </table>
         </div>
+
             
     </main>
 
