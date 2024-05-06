@@ -53,6 +53,7 @@ $hotels = [
 </head>
 
 <body>
+
     <main>
     <!--MODO 1:
         creo un ciclo for per scorrere l'array, sfruttando la funzione count($array) per la lunghezza -->
@@ -67,14 +68,16 @@ $hotels = [
             $parking_hotel = $hotel['parking'];
             $vote_hotel = $hotel['vote'];
             $distance_hotel = $hotel['distance_to_center'];
-            ?>
 
-            <h3>Nome Hotel: <?php echo $name_hotel; ?></h3> <!-- Metodo di scrittura classico con "echo" -->
-            <p>Descrizione Hotel: <?= $description_hotel; ?></p> <!-- Metodo di scrittura con shortcut "=" che mi sostituisce "php echo" all'interno del tag php stesso -->
-            <p>Parcheggio Hotel: <?= $parking_hotel; ?></p>
-            <p>Voto Hotel: <?= $vote_hotel; ?></p>
-            <p>Distanza Hotel dal Centro: <?= $distance_hotel; ?> Km</p>
-            
+            echo '<br>'
+            ?>
+            <div class="ps-4">
+                <h3>Nome Hotel: <?php echo $name_hotel; ?></h3> <!-- Metodo di scrittura classico con "echo" -->
+                <p>Descrizione Hotel: <?= $description_hotel; ?></p> <!-- Metodo di scrittura con shortcut "=" che mi sostituisce "php echo" all'interno del tag php stesso -->
+                <p>Parcheggio Hotel: <?= $parking_hotel; ?></p>
+                <p>Voto Hotel: <?= $vote_hotel; ?></p>
+                <p>Distanza Hotel dal Centro: <?= $distance_hotel; ?> Km</p>
+            </div>
         <?php } ?>
 
 
@@ -131,6 +134,7 @@ $hotels = [
                     </tr>
                 </thead>
 
+                <!-- creo un ciclo for per scorrere l'array, sfruttando la funzione count($array) per la lunghezza -->
                 <?php for($i = 0; $i < count($hotels); $i++) {?>
                 <?php
                     //prendo il singolo elemento dell'array
@@ -146,8 +150,18 @@ $hotels = [
                         <tr>
                             <td scope="row"><?= $name_hotel; ?></td>
                             <td scope="row"><?= $description_hotel; ?></td>
-                            <td scope="row"><?= $parking_hotel; ?></td>
-                            <td scope="row"><?= $vote_hotel; ?></td>
+
+                            <!-- creo una condizione per cui stampare in tabella se il parcheggio è disponibile o meno -->
+                            <td scope="row">
+                                <?php 
+                                    if($parking_hotel === true){
+                                      echo '<span style="color: rgb(20, 176, 20);"> &#10003; </span>';
+                                    } else {
+                                        echo '<span style="color: rgb(255, 0, 0);"> &#10007; </span>';
+                                    }
+                                ?>
+                            </td>
+                            <td scope="row"><?= $vote_hotel; ?>/5</td>
                             <td scope="row"><?= $distance_hotel; ?></td>
                         </tr>
                     </tbody>
