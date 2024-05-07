@@ -40,13 +40,14 @@ $hotels = [
 ];
 
 //mi richiamo il valore selezionato del parcheggio dal FORM
-$parking_available = $_GET['parking_available'];
+//utilizzo la funzione isset() per capire se i valori sono stati selezionati oppure mostrare i valori di default
+$parking_available = isset($_GET['parking_available']) ? $_GET['parking_available'] : '0';
 
 var_dump($parking_available);
 
 
 //mi richiamo il valore selezionato del voto dal FORM
-$vote_rating = intval($_GET['vote_rating']); //la funzione intval() converte il valore in numero
+$vote_rating = isset($_GET['vote_rating']) ? $_GET['vote_rating'] : '0'; 
 
 var_dump($vote_rating);
 
@@ -187,9 +188,12 @@ var_dump($vote_rating);
                     $distance_hotel = $hotel['distance_to_center'];
                 ?>
                     <tbody class="text-center">
-                        <!-- sfrutto il ternario per indicare le condizioni di disponibilità parcheggio & il voto dell'hotel-->
+                        <!-- sfrutto il ternario per indicare le condizioni di disponibilità parcheggio & il voto dell'hotel e sfrutto la funzione intval() per convertire il valore in numero -->
                         <tr class="
-                            <?= $parking_hotel === true && $parking_available === '2' || $vote_rating !== $vote_hotel || $parking_hotel === false && $parking_available === '1' || $vote_rating !== $vote_hotel ? 'd-none' : ''; ?>
+                            <?= $parking_hotel === true && $parking_available === '2' ||
+                            $parking_hotel === false && $parking_available === '1' ||
+                            $vote_rating !== '0' && intval($vote_rating) !== $vote_hotel
+                            ? 'd-none' : ''; ?>
                             ">
                             <td scope="row"><?= $name_hotel; ?></td>
                             <td><?= $description_hotel; ?></td>
